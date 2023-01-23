@@ -11,17 +11,53 @@ export default class Application extends EventEmitter {
   constructor() {
     super();
 
+    this._loading = document.querySelector("progress");
+    this._pages = [];
+
+    this._startLoading().then((e) => {
+      for (let page of this._pages) {
+        for (let planet of page.results) {
+          const getProps = ({ name, terrain, population }) => ({
+            name,
+            terrain,
+            population,
+          });
+          this._create(getProps(planet));
+        }
+      }
+    });
+
+    this.emit(Application.events.READY);
+  }
+
+  async _startLoading() {
+    this._loading.style.display = "block";
+    await this._load("https://swapi.boom.dev/api/planets");
+    this._stopLoading();
+  }
+
+  _create({ name, terrain, population }) {
     const box = document.createElement("div");
     box.classList.add("box");
     box.innerHTML = this._render({
-      name: "Placeholder",
-      terrain: "placeholder",
-      population: 0,
+      name: name,
+      terrain: terrain,
+      population: population,
     });
 
     document.body.querySelector(".main").appendChild(box);
+  }
 
-    this.emit(Application.events.READY);
+  async _load(url) {
+    if (!url) return;
+    let response = await fetch(url);
+    let data = await response.json();
+    this._pages.push(data);
+    await this._load(data.next);
+  }
+
+  _stopLoading() {
+    this._loading.style.display = "none";
   }
 
   _render({ name, terrain, population }) {
@@ -44,4 +80,6 @@ export default class Application extends EventEmitter {
 </article>
     `;
   }
+
+
 }
