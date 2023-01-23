@@ -62,22 +62,22 @@ export default class Application extends EventEmitter {
 
   _render({ name, terrain, population }) {
     return `
-<article class="media">
-  <div class="media-left">
-    <figure class="image is-64x64">
-      <img src="${image}" alt="planet">
-    </figure>
-  </div>
-  <div class="media-content">
-    <div class="content">
-    <h4>${name}</h4>
-      <p>
-        <span class="tag">${terrain}</span> <span class="tag">${population}</span>
-        <br>
-      </p>
-    </div>
-  </div>
-</article>
+            <article class="media">
+              <div class="media-left">
+                <figure class="image is-64x64">
+                  <img src="${image}" alt="planet">
+                </figure>
+              </div>
+              <div class="media-content">
+                <div class="content">
+                <h4>${name}</h4>
+                  <p>
+                    <span class="tag">${terrain}</span> <span class="tag">${population}</span>
+                    <br>
+                  </p>
+                </div>
+              </div>
+            </article>
     `;
   }
 
