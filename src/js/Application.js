@@ -31,7 +31,7 @@ export default class Application extends EventEmitter {
   }
 
   async _startLoading() {
-    this._loading.style.display = "block";
+    this._loading.style.visibility = "visible";
     await this._load("https://swapi.boom.dev/api/planets");
     this._stopLoading();
   }
@@ -57,7 +57,7 @@ export default class Application extends EventEmitter {
   }
 
   _stopLoading() {
-    this._loading.style.display = "none";
+    this._loading.style.visibility = "hidden";
   }
 
   _render({ name, terrain, population }) {
